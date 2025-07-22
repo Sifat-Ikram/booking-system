@@ -1,4 +1,4 @@
-"use client"
+"use client";
 import { useState, useEffect } from "react";
 import axiosPublic from "@/lib/axiosPublic";
 import { Booking } from "@/types/booking";
@@ -16,7 +16,7 @@ export default function DashboardPage() {
       if (resourceFilter) params.resource = resourceFilter;
       if (dateFilter) params.date = dateFilter;
 
-      const res = await axiosPublic.get<Booking[]>("/bookings", { params });
+      const res = await axiosPublic.get<Booking[]>("/", { params });
       setBookings(res.data);
     } catch (err) {
       console.error("Failed to fetch bookings", err);
@@ -28,9 +28,9 @@ export default function DashboardPage() {
   }, [resourceFilter, dateFilter]);
 
   return (
-    <main className="max-w-7xl mx-auto p-4">
-      <h1 className="text-3xl font-semibold mb-6 text-center">
-        Resource Booking Dashboard
+    <main className="max-w-7xl mx-auto p-4 sm:p-6 lg:p-12">
+      <h1 className="text-2xl sm:text-3xl md:text-4xl font-extrabold mb-8 text-center text-gray-900 tracking-tight">
+        Booking Dashboard
       </h1>
 
       <Filters

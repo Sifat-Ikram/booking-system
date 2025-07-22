@@ -1,4 +1,4 @@
-import React from "react";
+import { motion } from "framer-motion";
 import { Booking } from "@/types/booking";
 import BookingItem from "./BookingItem";
 
@@ -22,18 +22,29 @@ const BookingList: React.FC<BookingListProps> = ({ bookings }) => {
   }
 
   return (
-    <div className="space-y-8">
+    <div className="w-4/5 mx-auto grid grid-cols-1 gap-10 px-4 sm:px-6 lg:px-0">
       {Object.entries(grouped).map(([resource, resourceBookings]) => (
-        <section key={resource}>
-          <h2 className="text-xl font-semibold mb-4 border-b pb-1">
+        <motion.section
+          key={resource}
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+        >
+          <h2 className="text-xl font-semibold mb-5 border-b border-gray-300 pb-2 text-gray-900">
             {resource}
           </h2>
-          <ul className="space-y-3">
-            {resourceBookings.map((booking) => (
-              <BookingItem key={booking.id} booking={booking} />
-            ))}
+          <ul className="space-y-4">
+            {resourceBookings
+              .sort(
+                (a, b) =>
+                  new Date(a.startTime).getTime() -
+                  new Date(b.startTime).getTime()
+              )
+              .map((booking) => (
+                <BookingItem key={booking.id} booking={booking} />
+              ))}
           </ul>
-        </section>
+        </motion.section>
       ))}
     </div>
   );
