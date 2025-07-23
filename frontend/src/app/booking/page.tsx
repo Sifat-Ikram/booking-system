@@ -6,12 +6,13 @@ import { FaClock, FaUser, FaToolbox } from "react-icons/fa";
 import { motion } from "framer-motion";
 import useAxiosPublic from "@/lib/useAxiosPublic";
 import Swal from "sweetalert2";
+import { AxiosError } from "axios";
 
 type BookingFormInputs = {
   resource: string;
-  date: string; // YYYY-MM-DD
-  startTime: string; // time only, e.g. "02:00 AM"
-  endTime: string; // time only
+  date: string;
+  startTime: string;
+  endTime: string;
   requestedBy: string;
 };
 
@@ -60,9 +61,6 @@ export default function BookingFormPage() {
 
     try {
       const parseDateTime = (date: string, time: string) => {
-        // Combine date + time into local Date object
-        // Date string: "YYYY-MM-DD"
-        // Time string: "hh:mm AM/PM" or "HH:mm"
         const dateTimeStr = `${date} ${time}`;
         const dt = new Date(dateTimeStr);
         if (isNaN(dt.getTime())) {
@@ -103,20 +101,12 @@ export default function BookingFormPage() {
           text: "Booking duration cannot exceed 2 hours.",
         });
       }
-      const dala = {
+      await axiosPublic.post("/", {
         resource: data.resource,
         startTime: startTimeISO,
         endTime: endTimeISO,
         requestedBy: data.requestedBy,
-      };
-      console.log(dala);
-
-      //   await axiosPublic.post("/", {
-      //     resource: data.resource,
-      //     startTime: startTimeISO,
-      //     endTime: endTimeISO,
-      //     requestedBy: data.requestedBy,
-      //   });
+      });
 
       reset();
       Swal.fire({
@@ -124,12 +114,19 @@ export default function BookingFormPage() {
         title: "Booking Successful!",
         text: "Your booking has been saved.",
       });
-    } catch (err: any) {
+    } catch (err: unknown) {
+      let errorMessage = "Something went wrong.";
+
+      if (err instanceof AxiosError) {
+        errorMessage = err.response?.data?.error || err.message || errorMessage;
+      } else if (err instanceof Error) {
+        errorMessage = err.message;
+      }
+
       Swal.fire({
         icon: "error",
         title: "Booking Failed",
-        text:
-          err.response?.data?.error || err.message || "Something went wrong.",
+        text: errorMessage,
       });
     } finally {
       setLoading(false);

@@ -7,7 +7,14 @@ interface FiltersProps {
   setDateFilter: (val: string) => void;
 }
 
-const resources = ["Room A", "Room B", "Room C", "Device A"];
+const resources = [
+  "Room-A",
+  "Room-B",
+  "Room-C",
+  "Projector",
+  "Laptop",
+  "Device-A",
+];
 
 const Filters: React.FC<FiltersProps> = ({
   resourceFilter,
@@ -20,12 +27,12 @@ const Filters: React.FC<FiltersProps> = ({
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="flex flex-col sm:flex-row sm:justify-center sm:items-center gap-4 mb-8 max-w-xl mx-auto px-2"
+      className="flex flex-col sm:flex-row sm:justify-center sm:items-center gap-4 mb-8 px-2"
     >
       <label className="flex flex-col w-full sm:w-48">
         <span className="mb-1 text-sm font-medium text-gray-700">Resource</span>
         <select
-          value={resourceFilter}
+          value={resourceFilter ?? ""}
           onChange={(e) => setResourceFilter(e.target.value)}
           className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
         >
@@ -42,7 +49,7 @@ const Filters: React.FC<FiltersProps> = ({
         <span className="mb-1 text-sm font-medium text-gray-700">Date</span>
         <input
           type="date"
-          value={dateFilter}
+          value={dateFilter ?? ""}
           onChange={(e) => setDateFilter(e.target.value)}
           className="border border-gray-300 rounded-md px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition"
           placeholder="Filter by Date"

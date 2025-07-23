@@ -22,7 +22,7 @@ const BookingList: React.FC<BookingListProps> = ({ bookings }) => {
   }
 
   return (
-    <div className="w-4/5 mx-auto grid grid-cols-1 gap-10 px-4 sm:px-6 lg:px-0">
+    <div className="w-full grid grid-cols-1 gap-10 px-4 sm:px-6 lg:px-0">
       {Object.entries(grouped).map(([resource, resourceBookings]) => (
         <motion.section
           key={resource}
