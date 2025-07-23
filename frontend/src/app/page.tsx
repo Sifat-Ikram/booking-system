@@ -1,14 +1,15 @@
 "use client";
 import { useState, useEffect } from "react";
-import axiosPublic from "@/lib/axiosPublic";
 import { Booking } from "@/types/booking";
 import Filters from "@/components/booking/Filters";
 import BookingList from "@/components/booking/BookingList";
+import useAxiosPublic from "@/lib/useAxiosPublic";
 
 export default function DashboardPage() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [resourceFilter, setResourceFilter] = useState<string>("");
   const [dateFilter, setDateFilter] = useState<string>("");
+  const axiosPublic = useAxiosPublic();
 
   const fetchBookings = async () => {
     try {
