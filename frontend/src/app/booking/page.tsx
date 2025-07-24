@@ -46,7 +46,7 @@ export default function BookingFormPage() {
   useEffect(() => {
     if (watchedResource && watchedDate) {
       axiosPublic
-        .get("/slots", {
+        .get("/api/slots", {
           params: { resource: watchedResource, date: watchedDate },
         })
         .then((res) => setAvailableSlots(res.data))
@@ -101,7 +101,7 @@ export default function BookingFormPage() {
           text: "Booking duration cannot exceed 2 hours.",
         });
       }
-      await axiosPublic.post("/", {
+      await axiosPublic.post("/api/create", {
         resource: data.resource,
         startTime: startTimeISO,
         endTime: endTimeISO,

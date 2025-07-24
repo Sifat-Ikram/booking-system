@@ -4,6 +4,7 @@ import BookingItem from "./BookingItem";
 
 interface BookingListProps {
   bookings: Booking[];
+  onDelete: (id: string) => void;
 }
 
 const groupByResource = (bookings: Booking[]) => {
@@ -14,7 +15,7 @@ const groupByResource = (bookings: Booking[]) => {
   }, {});
 };
 
-const BookingList: React.FC<BookingListProps> = ({ bookings }) => {
+const BookingList: React.FC<BookingListProps> = ({ bookings, onDelete }) => {
   const grouped = groupByResource(bookings);
 
   if (bookings.length === 0) {
@@ -41,7 +42,7 @@ const BookingList: React.FC<BookingListProps> = ({ bookings }) => {
                   new Date(b.startTime).getTime()
               )
               .map((booking) => (
-                <BookingItem key={booking.id} booking={booking} />
+                <BookingItem key={booking.id} booking={booking} onDelete={onDelete} />
               ))}
           </ul>
         </motion.section>

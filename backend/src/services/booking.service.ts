@@ -75,7 +75,8 @@ export async function deleteBooking(id: number) {
 // Get available slots with buffer and fixed slot length (30 min)
 export async function getAvailableSlots(resource: string, date: string) {
   const SLOT_MINUTES = 30;
-  const BUFFER_MINUTES = 10;
+
+  const MIN_SLOT_DURATION_MINUTES = 15;
 
   const startOfDay = new Date(`${date}T08:00:00`);
   const endOfDay = new Date(`${date}T18:00:00`);
@@ -91,10 +92,16 @@ export async function getAvailableSlots(resource: string, date: string) {
   const slots = [];
   let slotStart = new Date(startOfDay);
 
-  while (slotStart < endOfDay) {
+  while (true) {
     const slotEnd = new Date(slotStart.getTime() + SLOT_MINUTES * 60 * 1000);
 
     if (slotEnd > endOfDay) break;
+
+    if (
+      (slotEnd.getTime() - slotStart.getTime()) / 60000 <
+      MIN_SLOT_DURATION_MINUTES
+    )
+      break;
 
     const hasConflict = isConflicting(slotStart, slotEnd, existingBookings);
 

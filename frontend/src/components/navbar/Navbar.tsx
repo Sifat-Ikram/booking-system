@@ -6,14 +6,14 @@ import { useRouter } from "next/navigation";
 import { MdEventAvailable } from "react-icons/md";
 
 const Navbar = () => {
-    const router = useRouter();
+  const router = useRouter();
   return (
-    <nav className="bg-blue-700 text-white px-6 py-4 shadow-md">
+    <nav className="bg-blue-700 text-white px-6 py-4 shadow-md sticky top-0 z-50">
       <div className="max-w-7xl mx-auto flex justify-between items-center">
         {/* Left Side - Title */}
         <Link href="/" className="text-2xl font-bold tracking-wide">
           <span className="hover:text-blue-200 transition duration-200">
-            Resource Booking System
+            Resource Booking
           </span>
         </Link>
 

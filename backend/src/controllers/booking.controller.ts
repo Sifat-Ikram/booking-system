@@ -10,7 +10,6 @@ import {
 // Get all bookings with optional query filters
 export async function getAllBookings(req: Request, res: Response) {
   try {
-    const { resource, date } = req.query;
     const query = getBookingsQuerySchema.parse(req.query);
     const bookings = await bookingService.getBookings(
       query.resource,

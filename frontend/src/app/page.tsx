@@ -20,7 +20,7 @@ export default function DashboardPage() {
       if (resourceFilter) params.resource = resourceFilter;
       if (dateFilter) params.date = dateFilter;
 
-      const res = await axiosPublic.get<Booking[]>("/", { params });
+      const res = await axiosPublic.get<Booking[]>("/api/get", { params });
       setBookings(res.data);
     } catch (err) {
       console.error("Failed to fetch bookings", err);
@@ -30,6 +30,10 @@ export default function DashboardPage() {
   useEffect(() => {
     fetchBookings();
   }, [fetchBookings]);
+
+  const handleDelete = (id: string) => {
+    setBookings((prev) => prev.filter((booking) => booking.id !== id));
+  };
 
   return (
     <main className="w-4/5 mx-auto px-4 sm:px-6 lg:px-12 py-8">
@@ -88,7 +92,7 @@ export default function DashboardPage() {
         transition={{ duration: 0.4 }}
       >
         {viewMode === "list" ? (
-          <BookingList bookings={bookings} />
+          <BookingList bookings={bookings} onDelete={handleDelete} />
         ) : (
           <WeeklyCalendar bookings={bookings} />
         )}

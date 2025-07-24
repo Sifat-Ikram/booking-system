@@ -5,7 +5,7 @@ import { useMemo } from "react";
 const useAxiosPublic = () => {
   const axiosPublic = useMemo(() => {
     return axios.create({
-      baseURL: "http://localhost:3000/api/bookings",
+      baseURL: "https://booking-system-backend-seven.vercel.app",
       headers: {
         "Content-Type": "application/json",
       },

@@ -1,14 +1,15 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.ts",
   "scripts": {
     "build": "tsc",
-    "start": "node dist/server.js",
-    "dev": "nodemon --watch 'src/**/*.ts' --exec ts-node src/server.ts"
+    "vercel-build": "tsc",
+    "postinstall": "prisma generate",
+    "dev": "nodemon --watch \"src/**/*.ts\" --exec ts-node src/server.ts"
   },
   "prisma": {
-  "seed": "ts-node prisma/seed.ts"
+    "seed": "ts-node prisma/seed.ts"
   },
   "keywords": [],
   "author": "",
@@ -25,8 +26,11 @@
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.3",
-    "@types/node": "^24.0.15",
+    "@types/node": "^24.1.0",
+    "@vercel/node": "^5.3.6",
+    "copyfiles": "^2.4.1",
     "nodemon": "^3.1.10",
+    "prisma": "^6.12.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.3"
   }
